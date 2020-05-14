@@ -19,4 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
+    Route::get('/', function () {
+        return redirect()->route('dashboard.categories.index');
+    });
+
+    Route::resource('categories', 'CategoryController');
+});
