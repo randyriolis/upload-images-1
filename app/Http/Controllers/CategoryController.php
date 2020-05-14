@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CategoryRepositoryInterface;
+use DataTables;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $categoryRepository;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard.category.index');
+        if (! $request->ajax()) {
+            return view('dashboard.category.index');
+        }
+
+        $categories = $this->categoryRepository->index();
+
+        return DataTables::of($categories)->make(true);
     }
 
     /**

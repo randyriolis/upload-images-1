@@ -1,4 +1,8 @@
 require('jquery.easing');
+require('izitoast');
+
+window.$.fn.DataTable = require('datatables.net');
+window.$.fn.DataTable = require('datatables.net-bs4');
 
 (function($) {
   "use strict"; // Start of use strict

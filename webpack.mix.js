@@ -23,3 +23,6 @@ mix.js('resources/js/app.js', js)
 // template sb admin 2
 mix.js('resources/js/sb-admin-2.js', js)
     .sass('resources/sass/sb-admin-2/sb-admin-2.scss', css);
+
+// category
+mix.js('resources/js/dashboard/category/index.js', js + 'dashboard/category/');

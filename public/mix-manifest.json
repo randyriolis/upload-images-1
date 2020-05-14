@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/sb-admin-2.css": "/css/sb-admin-2.css",
+    "/js/dashboard/category/index.js": "/js/dashboard/category/index.js",
     "/js/sb-admin-2.js": "/js/sb-admin-2.js"
 }
