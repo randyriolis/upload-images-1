@@ -13,16 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 Auth::routes();
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return redirect()->route('dashboard.categories.index');
-    });
+    Route::redirect('/', 'dashboard/categories');
 
     Route::resource('categories', 'CategoryController');
 });
