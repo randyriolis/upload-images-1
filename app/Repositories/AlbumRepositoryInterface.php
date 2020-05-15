@@ -10,5 +10,5 @@ interface AlbumRepositoryInterface
 
     public function update($data, $id);
 
-    public function show($id);
+    public function firstOrFail($id);
 }

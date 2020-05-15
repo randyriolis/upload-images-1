@@ -47,18 +47,13 @@ class AlbumRepository implements AlbumRepositoryInterface
         return $album->delete();
     }
 
-    public function show($id)
-    {
-        return $this->firstOrFail($id);
-    }
-
     /**
      * Get album berdasarkan id dan user yang sedang login
      * 
      * @param   int id
      * @return  App\Models\Album
      */
-    private function firstOrFail($id)
+    public function firstOrFail($id)
     {
         return Album::where([
                 'id' => $id,

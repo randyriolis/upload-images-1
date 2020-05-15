@@ -60,7 +60,7 @@ class AlbumController extends Controller
      */
     public function show($id)
     {
-        $album = $this->albumRepository->show($id);
+        $album = $this->albumRepository->firstOrFail($id);
 
         return view('dashboard.album.show', compact('album'));
     }
