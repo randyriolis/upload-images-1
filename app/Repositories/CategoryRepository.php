@@ -21,12 +21,30 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function update($data, $id)
     {
-        $category = Category::where([
+        $category = $this->firstOrFail($id);
+
+        return $category->update($data);
+    }
+
+    public function destroy($id)
+    {
+        $category = $this->firstOrFail($id);
+
+        return $category->delete();
+    }
+
+    /**
+     * Get category berdasarkan id dan user yang sedang login
+     * 
+     * @param   int id
+     * @return  App\Models\Category
+     */
+    private function firstOrFail($id)
+    {
+        return Category::where([
                 'id' => $id,
                 'user_id' => Auth::id()
             ])
             ->firstOrFail();
-
-        return $category->update($data);
     }
 }
