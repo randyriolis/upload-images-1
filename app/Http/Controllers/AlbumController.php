@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\AlbumRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
     private $albumRepository;
+    private $categoryRepository;
 
-    public function __construct(AlbumRepositoryInterface $albumRepository)
+    public function __construct(AlbumRepositoryInterface $albumRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->albumRepository = $albumRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     
     /**
@@ -23,7 +26,9 @@ class AlbumController extends Controller
     public function index()
     {
         if (! request()->ajax()) {
-            return view('dashboard.album.index');
+            $categories = $this->categoryRepository->getIdName();
+
+            return view('dashboard.album.index', compact('categories'));
         }
 
         $albums = $this->albumRepository->index();
@@ -39,7 +44,12 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'category_id' => 'required|integer'
+        ]);
+
+        return $this->albumRepository->store($data);
     }
 
     /**

@@ -47,4 +47,9 @@ class CategoryRepository implements CategoryRepositoryInterface
             ])
             ->firstOrFail();
     }
+
+    public function getIdName()
+    {
+        return Category::select('id', 'name')->whereUserId(Auth::id())->get();
+    }
 }

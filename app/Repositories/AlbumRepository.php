@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Album;
 use Auth;
+use Illuminate\Support\Str;
 
 class AlbumRepository implements AlbumRepositoryInterface
 {
@@ -19,5 +20,13 @@ class AlbumRepository implements AlbumRepositoryInterface
                     'category' => $album->category->name
                 ];
             });
+    }
+
+    public function store($data)
+    {
+        $data['user_id'] = Auth::id();
+        $data['folder'] = Str::uuid();
+
+        return Album::create($data);
     }
 }
