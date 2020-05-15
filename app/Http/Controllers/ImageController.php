@@ -103,4 +103,43 @@ class ImageController extends Controller
 
         return abort(500);
     }
+
+    /**
+     * Regenerate nama folder dan image
+     */
+    public function regenerate($albumId)
+    {
+        $newFolder = Str::uuid();
+
+        $data = [
+            'folder' => $newFolder
+        ];
+
+        $success = $this->albumRepository->update($data, $albumId);
+
+        if (! $success) {
+            return abort(500);
+        }
+
+        $images = $this->imageRepository->index($albumId);
+        $oldFolder = null;
+        $data = [];
+
+        foreach ($images as $key => $value) {
+            $newImageName = $newFolder . '/' . Str::uuid() . '.' . pathinfo($value->path, PATHINFO_EXTENSION);
+            
+            try {
+                Storage::move($value->path, $newImageName);
+                $oldFolder = pathinfo($value->path, PATHINFO_DIRNAME);
+            } catch (\Throwable $th) {}
+
+            $data[$value->id] = $newImageName;
+        }
+
+        if ($oldFolder) {
+            Storage::deleteDirectory($oldFolder);
+        }
+
+        return $this->imageRepository->regenerate($data);
+    }
 }

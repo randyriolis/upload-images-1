@@ -121,3 +121,24 @@ $('#image-hapus-modal form').submit(function (e) {
         .catch(() => iziToast('Gagal menghapus data', false))
         .then(() => form.loading(false));
 })
+
+$('#image-regenerate-modal form').submit(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const form = $(this);
+    const modal = $(this).parents('.modal');
+
+    form.loading();
+
+    const url = `/dashboard/images/regenerate/${albumId}`;
+
+    axios.post(url)
+        .then(() => {
+            modal.modal('hide');
+            dataTable.ajax.reload();
+            iziToast('Berhasil regenerate url')
+        })
+        .catch(() => iziToast('Gagal regenerate url', false))
+        .then(() => form.loading(false));
+})

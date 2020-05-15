@@ -21,7 +21,7 @@
     </div>
     <div class="col text-right">
         <button class="btn btn-primary" data-toggle="modal" data-target="#image-tambah-modal">Add Image</button>
-        <button class="btn btn-warning">Regenerate URL</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#image-regenerate-modal">Regenerate URL</button>
     </div>
 </div>
 <div class="row">
@@ -97,6 +97,31 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="image-regenerate-modal" tabindex="-1" role="dialog" aria-labelledby="image-regenerate-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="needs-validation" novalidate>
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Regenerate URL</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Apakah Anda yakin akan memperbarui semua URL di album <strong>{{ $album->title }}</strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Yakin</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </div>

@@ -35,6 +35,17 @@ class ImageRepository implements ImageRepositoryInterface
         return false;
     }
 
+    public function regenerate($data)
+    {
+        foreach ($data as $key => $value) {
+            Image::whereId($key)->update([
+                'path' => $value
+            ]);
+        }
+
+        return true;
+    }
+
     /**
      * Get image berdasarkan id dan user yang sedang login
      * 
