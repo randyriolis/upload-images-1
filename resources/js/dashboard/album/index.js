@@ -24,7 +24,14 @@ const dataTable = $('#dataTable').DataTable({
                 `
             }
         }
-    ]
+    ],
+    drawCallback: () => {
+        $('#dataTable button.edit').click(function () {
+            const tr = $(this).closest('tr');
+            const data = dataTable.row(tr).data();
+            showEditModal(data);
+        })
+    }
 })
 
 $('#album-tambah-modal form').submit(function (e) {
@@ -48,5 +55,38 @@ $('#album-tambah-modal form').submit(function (e) {
             iziToast('Berhasil menambah data')
         })
         .catch(() => iziToast('Gagal menambah data', false))
+        .then(() => form.loading(false));
+})
+
+function showEditModal(data) {
+    $('#album-edit-id').val(data.id);
+    $('#album-edit-title').val(data.title);
+    $('#album-edit-category').val(data.category_id);
+    $('#album-edit-modal').modal('show');
+}
+
+$('#album-edit-modal form').submit(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (! this.checkValidity()) {
+        return $(this).addClass('was-validated');
+    }
+
+    const form = $(this);
+    const modal = $(this).parents('.modal');
+
+    form.loading();
+
+    const url = 'albums/' + $('#album-edit-id').val();
+
+    axios.put(url, form.serialize())
+        .then(() => {
+            modal.modal('hide');
+            form.removeClass('was-validated')[0].reset();
+            dataTable.ajax.reload();
+            iziToast('Berhasil menyimpan data')
+        })
+        .catch(() => iziToast('Gagal menyimpan data', false))
         .then(() => form.loading(false));
 })

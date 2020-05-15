@@ -17,6 +17,7 @@ class AlbumRepository implements AlbumRepositoryInterface
                 return [
                     'id' => $album->id,
                     'title' => $album->title,
+                    'category_id' => $album->category_id,
                     'category' => $album->category->name
                 ];
             });
@@ -28,5 +29,27 @@ class AlbumRepository implements AlbumRepositoryInterface
         $data['folder'] = Str::uuid();
 
         return Album::create($data);
+    }
+
+    public function update($data, $id)
+    {
+        $album = $this->firstOrFail($id);
+
+        return $album->update($data);
+    }
+
+    /**
+     * Get album berdasarkan id dan user yang sedang login
+     * 
+     * @param   int id
+     * @return  App\Models\Album
+     */
+    private function firstOrFail($id)
+    {
+        return Album::where([
+                'id' => $id,
+                'user_id' => Auth::id()
+            ])
+            ->firstOrFail();
     }
 }

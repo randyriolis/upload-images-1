@@ -72,7 +72,12 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'category_id' => 'required|integer'
+        ]);
+
+        return $this->albumRepository->update($data, $id);
     }
 
     /**
