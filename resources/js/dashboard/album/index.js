@@ -10,6 +10,10 @@ const dataTable = $('#dataTable').DataTable({
             name: 'title'
         },
         {
+            data: 'images_count',
+            name: 'images_count'
+        },
+        {
             data: 'category',
             name: 'category'
         },

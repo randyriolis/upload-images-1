@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
+                                <th>Images</th>
                                 <th>Category</th>
                                 <th>Action</th>
                             </tr>

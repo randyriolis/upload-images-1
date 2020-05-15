@@ -12,11 +12,13 @@ class AlbumRepository implements AlbumRepositoryInterface
     {
         return Album::whereUserId(Auth::id())
             ->with('category')
+            ->withcount('images')
             ->get()
             ->map(function ($album) {
                 return [
                     'id' => $album->id,
                     'title' => $album->title,
+                    'images_count' => $album->images_count,
                     'category_id' => $album->category_id ?: null,
                     'category' => $album->category ? $album->category->name : null
                 ];
