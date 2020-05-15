@@ -17,10 +17,11 @@ const dataTable = $('#dataTable').DataTable({
             data: null,
             orderable: false,
             searchable: false,
-            render: () => {
+            render: (data) => {
                 return /*html*/ `
                     <button class="btn btn-sm btn-success edit">Edit</button>
                     <button class="btn btn-sm btn-danger delete">Hapus</button>
+                    <a href="${window.location.href + '/' + data.id}" class="btn btn-sm btn-primary detail">Detail</a>
                 `
             }
         }

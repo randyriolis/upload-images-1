@@ -18,7 +18,7 @@
             <span>Categories</span>
         </a>
     </li>
-    <li class="nav-item {{ ! Route::is('dashboard.albums.index') ?: 'active' }}">
+    <li class="nav-item {{ ! Route::is('dashboard.albums.*') ?: 'active' }}">
         <a class="nav-link" href="{{ route('dashboard.albums.index') }}">
             <i class="fas fa-images"></i>
             <span>Albums</span>

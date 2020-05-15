@@ -45,6 +45,11 @@ class AlbumRepository implements AlbumRepositoryInterface
         return $album->delete();
     }
 
+    public function show($id)
+    {
+        return $this->firstOrFail($id);
+    }
+
     /**
      * Get album berdasarkan id dan user yang sedang login
      * 
