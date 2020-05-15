@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\AlbumRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
     private $imageRepository;
+    private $albumRepository;
 
-    public function __construct(ImageRepositoryInterface $imageRepository)
+    public function __construct(ImageRepositoryInterface $imageRepository, AlbumRepositoryInterface $albumRepository)
     {
         $this->imageRepository = $imageRepository;
+        $this->albumRepository = $albumRepository;
     }
 
     /**
@@ -35,7 +39,28 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'album_id' => 'required|integer',
+            'image.*' => 'image'
+        ], [
+            'image' => 'Format file tidak didukung.'
+        ]);
+
+        $album = $this->albumRepository->firstOrFail($request->album_id);
+        $data = [];
+        
+        foreach ($request->file('image') as $key => $value) {
+            $imageName = Str::uuid() . '.' . $value->getClientOriginalExtension();
+
+            $data[$key] = [
+                'album_id' => $album->id,
+                'path' => $value->storeAs($album->folder, $imageName),
+                'created_at' => now()->toDateTimeString(),
+                'updated_at' => now()->toDateTimeString()
+            ];
+        }
+
+        return $this->imageRepository->store($data);
     }
 
     /**

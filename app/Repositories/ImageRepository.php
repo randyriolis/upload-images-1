@@ -17,4 +17,9 @@ class ImageRepository implements ImageRepositoryInterface
             ->join('albums', 'album_id', 'albums.id')
             ->get();
     }
+
+    public function store($data)
+    {
+        return Image::insert($data);
+    }
 }
