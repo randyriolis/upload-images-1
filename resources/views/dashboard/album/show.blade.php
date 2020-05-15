@@ -74,4 +74,33 @@
         </form>
     </div>
 </div>
+
+<div class="modal fade" id="image-hapus-modal" tabindex="-1" role="dialog" aria-labelledby="image-hapus-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="needs-validation" novalidate>
+            @csrf
+            <input type="hidden" name="id" id="image-hapus-id">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hapus Gambar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Apakah Anda yakin akan menghapus gambar <strong></strong>?
+                    </p>
+                    <div class="text-center">
+                        <img src="" alt="thumbnail" class="img-thumbnail" height="125" width="200">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

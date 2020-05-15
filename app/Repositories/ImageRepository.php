@@ -22,4 +22,33 @@ class ImageRepository implements ImageRepositoryInterface
     {
         return Image::insert($data);
     }
+
+    public function destroy($id)
+    {
+        $image = $this->firstOrFail($id);
+        $path = $image->path;
+
+        if ($image->delete()) {
+            return $path;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get image berdasarkan id dan user yang sedang login
+     * 
+     * @param   int id
+     * @return  App\Models\Image
+     */
+    public function firstOrFail($id)
+    {
+        return Image::select('images.id', 'path')
+            ->where([
+                'images.id' => $id,
+                'user_id' => Auth::id()
+            ])
+            ->join('albums', 'album_id', 'albums.id')
+            ->firstOrFail();
+    }
 }

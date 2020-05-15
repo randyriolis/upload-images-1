@@ -7,6 +7,7 @@ use App\Repositories\ImageRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Storage;
 
 class ImageController extends Controller
 {
@@ -94,6 +95,12 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $path = $this->imageRepository->destroy($id);
+
+        if ($path) {
+            return Storage::delete($path);
+        }
+
+        return abort(500);
     }
 }
