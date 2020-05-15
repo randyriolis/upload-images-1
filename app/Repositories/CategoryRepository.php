@@ -9,7 +9,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 {
     public function index()
     {
-        return Category::select('id', 'name')->get();
+        return Category::select('id', 'name')->whereUserId(Auth::id())->withCount('albums')->get();
     }
 
     public function store($data)

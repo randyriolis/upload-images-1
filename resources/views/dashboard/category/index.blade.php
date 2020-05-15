@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Albums</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

@@ -10,6 +10,10 @@ const dataTable = $('#dataTable').DataTable({
             name: 'name'
         },
         {
+            data: 'albums_count',
+            name: 'albums_count'
+        },
+        {
             data: null,
             orderable: false,
             searchable: false,
