@@ -66,7 +66,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required'
+        ]);
+
+        return $this->categoryRepository->update($data, $id);
     }
 
     /**
