@@ -44,6 +44,12 @@ const dataTable = $('#dataTable').DataTable({
             const data = dataTable.row(tr).data();
             showDeleteModal(data);
         })
+
+        $('#dataTable button.copy').click(function () {
+            const tr = $(this).closest('tr');
+            const data = dataTable.row(tr).data();
+            copyToClipboard(data);
+        })
     }
 })
 
@@ -142,3 +148,16 @@ $('#image-regenerate-modal form').submit(function (e) {
         .catch(() => iziToast('Gagal regenerate url', false))
         .then(() => form.loading(false));
 })
+
+function copyToClipboard(data) {
+    const url = window.location.protocol + '//' + window.location.hostname + '/storage/' + data.path;
+    let aux = document.createElement("input");
+
+    aux.setAttribute("value", url);
+    document.body.appendChild(aux);
+    aux.select();
+    document.execCommand("copy");
+    document.body.removeChild(aux);
+
+    iziToast('URL telah disalin');
+}
