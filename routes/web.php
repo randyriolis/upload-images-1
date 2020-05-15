@@ -20,5 +20,5 @@ Auth::routes();
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
     Route::redirect('/', 'dashboard/categories');
 
-    Route::resource('categories', 'CategoryController');
+    Route::apiResource('categories', 'CategoryController');
 });

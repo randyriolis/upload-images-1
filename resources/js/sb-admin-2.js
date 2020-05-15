@@ -1,11 +1,7 @@
-require('jquery.easing');
-require('izitoast');
-
-window.$.fn.DataTable = require('datatables.net');
-window.$.fn.DataTable = require('datatables.net-bs4');
-
 (function($) {
   "use strict"; // Start of use strict
+  
+  require('./sb-admin-2-custom');
 
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {

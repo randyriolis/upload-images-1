@@ -11,7 +11,7 @@
 <h1 class="h3 mb-4 text-gray-800">Categories</h1>
 <div class="row mb-2">
     <div class="col text-right">
-        <button class="btn btn-primary">Add Category</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#kategori-tambah-modal">Add Category</button>
     </div>
 </div>
 <div class="row">
@@ -30,6 +30,35 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="kategori-tambah-modal" tabindex="-1" role="dialog" aria-labelledby="kategori-tambah-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="needs-validation" novalidate>
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Kategori</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="kategori-tambah-nama">Nama</label>
+                        <input type="text" class="form-control" id="kategori-tambah-nama" name="name" required>
+                        <div class="invalid-feedback">
+                            Data tidak boleh kosong
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
