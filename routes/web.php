@@ -18,7 +18,10 @@ Route::view('/', 'welcome');
 Auth::routes();
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
-    Route::redirect('/', 'dashboard/categories');
+    Route::redirect('/', '/dashboard/categories');
 
-    Route::apiResource('categories', 'CategoryController');
+    Route::apiResources([
+        'categories' => 'CategoryController',
+        'albums' => 'AlbumController'
+    ]);
 });

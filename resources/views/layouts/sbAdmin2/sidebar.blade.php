@@ -18,6 +18,12 @@
             <span>Categories</span>
         </a>
     </li>
+    <li class="nav-item {{ ! Route::is('dashboard.albums.index') ?: 'active' }}">
+        <a class="nav-link" href="{{ route('dashboard.albums.index') }}">
+            <i class="fas fa-images"></i>
+            <span>Albums</span>
+        </a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
