@@ -17,8 +17,8 @@ class AlbumRepository implements AlbumRepositoryInterface
                 return [
                     'id' => $album->id,
                     'title' => $album->title,
-                    'category_id' => $album->category_id,
-                    'category' => $album->category->name
+                    'category_id' => $album->category_id ?: null,
+                    'category' => $album->category ? $album->category->name : null
                 ];
             });
     }
@@ -36,6 +36,13 @@ class AlbumRepository implements AlbumRepositoryInterface
         $album = $this->firstOrFail($id);
 
         return $album->update($data);
+    }
+
+    public function destroy($id)
+    {
+        $album = $this->firstOrFail($id);
+
+        return $album->delete();
     }
 
     /**

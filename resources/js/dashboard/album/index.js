@@ -31,6 +31,12 @@ const dataTable = $('#dataTable').DataTable({
             const data = dataTable.row(tr).data();
             showEditModal(data);
         })
+
+        $('#dataTable button.delete').click(function () {
+            const tr = $(this).closest('tr');
+            const data = dataTable.row(tr).data();
+            showDeleteModal(data);
+        })
     }
 })
 
@@ -88,5 +94,37 @@ $('#album-edit-modal form').submit(function (e) {
             iziToast('Berhasil menyimpan data')
         })
         .catch(() => iziToast('Gagal menyimpan data', false))
+        .then(() => form.loading(false));
+})
+
+function showDeleteModal(data) {
+    $('#album-hapus-id').val(data.id);
+    $('#album-hapus-modal .modal-body strong').text(data.title);
+    $('#album-hapus-modal').modal('show');
+}
+
+$('#album-hapus-modal form').submit(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (! this.checkValidity()) {
+        return $(this).addClass('was-validated');
+    }
+
+    const form = $(this);
+    const modal = $(this).parents('.modal');
+
+    form.loading();
+
+    const url = 'albums/' + $('#album-hapus-id').val();
+
+    axios.delete(url, form.serialize())
+        .then(() => {
+            modal.modal('hide');
+            form.removeClass('was-validated')[0].reset();
+            dataTable.ajax.reload();
+            iziToast('Berhasil menghapus data')
+        })
+        .catch(() => iziToast('Gagal menghapus data', false))
         .then(() => form.loading(false));
 })

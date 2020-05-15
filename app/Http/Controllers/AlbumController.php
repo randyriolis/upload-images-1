@@ -88,6 +88,6 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->albumRepository->destroy($id);
     }
 }
