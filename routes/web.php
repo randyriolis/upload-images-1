@@ -22,6 +22,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::apiResources([
         'categories' => 'CategoryController',
-        'albums' => 'AlbumController'
+        'albums' => 'AlbumController',
+        'images' => 'ImageController'
     ]);
 });

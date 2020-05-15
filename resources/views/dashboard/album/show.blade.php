@@ -3,7 +3,8 @@
 @section('title', $album->title)
 
 @section('head')
-    {{-- <script src="{{ mix('js/dashboard/album/show.js') }}" defer></script> --}}
+    <meta name="album-id" content="{{ $album->id }}">
+    <script src="{{ mix('js/dashboard/album/show.js') }}" defer></script>
 @endsection
 
 @section('content')

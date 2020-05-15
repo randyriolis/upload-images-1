@@ -29,3 +29,4 @@ mix.js('resources/js/dashboard/category/index.js', js + 'dashboard/category/');
 
 // album
 mix.js('resources/js/dashboard/album/index.js', js + 'dashboard/album/');
+mix.js('resources/js/dashboard/album/show.js', js + 'dashboard/album/');
