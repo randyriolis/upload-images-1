@@ -54,6 +54,14 @@
                             Data tidak boleh kosong
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="kategori-tambah-slug">Slug</label>
+                        <input type="text" class="form-control" id="kategori-tambah-slug" name="slug" pattern="[A-Za-z0-9-]+" required>
+                        <small class="form-text text-muted">Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, dan tanda pisah (-)</small>
+                        <div class="invalid-feedback">
+                            Data tidak boleh kosong
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

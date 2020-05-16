@@ -41,9 +41,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|unique:categories|regex:/^[A-Za-z0-9._\s-]+$/'
+            'name' => 'required|unique:categories|regex:/^[A-Za-z0-9._\s-]+$/',
+            'slug' => 'required|unique:categories|regex:/^[A-Za-z0-9-]+$/',
         ], [
             'regex' => 'Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, titik (.), underscore (_), tanda pisah (-), dan spasi',
+            'slug' => 'Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, dan tanda pisah (-)',
             'unique' => 'Nama sudah ada'
         ]);
 
