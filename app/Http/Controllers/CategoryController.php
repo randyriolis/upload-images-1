@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\CategoryRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
+use Storage;
 
 class CategoryController extends Controller
 {
@@ -57,6 +58,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        return $this->categoryRepository->destroy($id);
+        $category = $this->categoryRepository->firstOrFail($id);
+        $isDeleted = $this->categoryRepository->destroy($id);
+
+        if ($isDeleted) {
+            return Storage::deleteDirectory($category->name);
+        }
     }
 }
