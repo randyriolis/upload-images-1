@@ -18,25 +18,18 @@ const dataTable = $('#dataTable').DataTable({
             name: 'category'
         },
         {
-            data: null,
+            data: 'id',
             orderable: false,
             searchable: false,
-            render: (data) => {
+            render: (id) => {
                 return /*html*/ `
-                    <button class="btn btn-sm btn-success edit">Edit</button>
                     <button class="btn btn-sm btn-danger delete">Hapus</button>
-                    <a href="${window.location.href + '/' + data.id}" class="btn btn-sm btn-primary detail">Detail</a>
+                    <a href="${window.location.href + '/' + id}" class="btn btn-sm btn-primary detail">Detail</a>
                 `
             }
         }
     ],
     drawCallback: () => {
-        $('#dataTable button.edit').click(function () {
-            const tr = $(this).closest('tr');
-            const data = dataTable.row(tr).data();
-            showEditModal(data);
-        })
-
         $('#dataTable button.delete').click(function () {
             const tr = $(this).closest('tr');
             const data = dataTable.row(tr).data();
@@ -69,38 +62,6 @@ $('#album-tambah-modal form').submit(function (e) {
         .then(() => form.loading(false));
 })
 
-function showEditModal(data) {
-    $('#album-edit-id').val(data.id);
-    $('#album-edit-title').val(data.title);
-    $('#album-edit-category').val(data.category_id);
-    $('#album-edit-modal').modal('show');
-}
-
-$('#album-edit-modal form').submit(function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (! this.checkValidity()) {
-        return $(this).addClass('was-validated');
-    }
-
-    const form = $(this);
-    const modal = $(this).parents('.modal');
-
-    form.loading();
-
-    const url = 'albums/' + $('#album-edit-id').val();
-
-    axios.put(url, form.serialize())
-        .then(() => {
-            modal.modal('hide');
-            form.removeClass('was-validated')[0].reset();
-            dataTable.ajax.reload();
-            iziToast('Berhasil menyimpan data')
-        })
-        .catch(() => iziToast('Gagal menyimpan data', false))
-        .then(() => form.loading(false));
-})
 
 function showDeleteModal(data) {
     $('#album-hapus-id').val(data.id);

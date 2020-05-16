@@ -45,8 +45,11 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:albums|regex:/^[A-Za-z0-9._\s-]+$/',
             'category_id' => 'required|integer'
+        ], [
+            'regex' => 'Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, titik (.), underscore (_), tanda pisah (-), dan spasi',
+            'unique' => 'Nama sudah ada'
         ]);
 
         return $this->albumRepository->store($data);
@@ -63,23 +66,6 @@ class AlbumController extends Controller
         $album = $this->albumRepository->firstOrFail($id);
 
         return view('dashboard.album.show', compact('album'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $data = $request->validate([
-            'title' => 'required',
-            'category_id' => 'required|integer'
-        ]);
-
-        return $this->albumRepository->update($data, $id);
     }
 
     /**

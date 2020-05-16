@@ -15,10 +15,9 @@ class CreateAlbumsTable extends Migration
     {
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->uuid('folder');
+            $table->string('title')->unique();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->uuid('folder')->unique();
             $table->timestamps();
         });
     }

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Category;
-use Auth;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
