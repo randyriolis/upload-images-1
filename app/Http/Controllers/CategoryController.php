@@ -40,26 +40,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:categories|regex:/^[A-Za-z0-9._\s-]+$/'
+        ], [
+            'regex' => 'Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, titik (.), underscore (_), tanda pisah (-), dan spasi',
+            'unique' => 'Nama sudah ada'
         ]);
 
         return $this->categoryRepository->store($data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $data = $request->validate([
-            'name' => 'required'
-        ]);
-
-        return $this->categoryRepository->update($data, $id);
     }
 
     /**

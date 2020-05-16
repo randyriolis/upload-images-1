@@ -19,11 +19,10 @@ Auth::routes();
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
     Route::redirect('/', '/dashboard/categories');
-
+    Route::apiResource('categories', 'CategoryController')->except(['update', 'show']);
     Route::post('images/regenerate/{albumId}', 'ImageController@regenerate')->name('images.regenerate');
     
     Route::apiResources([
-        'categories' => 'CategoryController',
         'albums' => 'AlbumController',
         'images' => 'ImageController'
     ]);
