@@ -53,4 +53,15 @@ class AlbumRepository implements AlbumRepositoryInterface
     {
         return Album::whereId($id)->firstOrFail();
     }
+
+    /**
+     * Get path album
+     */
+    public function getPathAlbum($id)
+    {
+        return Album::select('name', 'title')
+            ->where('albums.id', $id)
+            ->join('categories', 'category_id', 'categories.id')
+            ->firstOrFail();
+    }
 }

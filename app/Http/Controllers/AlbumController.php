@@ -6,6 +6,7 @@ use App\Repositories\AlbumRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
+use Storage;
 
 class AlbumController extends Controller
 {
@@ -76,6 +77,11 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
-        return $this->albumRepository->destroy($id);
+        $album = $this->albumRepository->getPathAlbum($id);
+        $isDeleted = $this->albumRepository->destroy($id);
+
+        if ($isDeleted) {
+            return Storage::deleteDirectory("$album->name/$album->title");
+        }
     }
 }
