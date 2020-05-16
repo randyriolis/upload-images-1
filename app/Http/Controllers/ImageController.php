@@ -56,7 +56,7 @@ class ImageController extends Controller
         
         foreach ($request->file('image') as $key => $value) {
             $imageName = Str::uuid() . '.' . $value->getClientOriginalExtension();
-            $path = "$category->name/$album->title/$album->folder";
+            $path = "$category->slug/$album->slug/$album->folder";
 
             $data[$key] = [
                 'album_id' => $album->id,
@@ -102,7 +102,7 @@ class ImageController extends Controller
         $album = $this->albumRepository->firstOrFail($albumId);
         $category = $this->categoryRepository->firstOrFail($album->category_id);
         $data = [];
-        $newAlbumPath = "$category->name/$album->title/$album->folder";
+        $newAlbumPath = "$category->slug/$album->slug/$album->folder";
 
         foreach ($images as $key => $value) {
             $newImagePath = "$newAlbumPath/" . Str::uuid() . '.' . pathinfo($value->path, PATHINFO_EXTENSION);
@@ -114,7 +114,7 @@ class ImageController extends Controller
             $data[$value->id] = $newImagePath;
         }
 
-        Storage::deleteDirectory("$category->name/$oldAlbum->title/$oldAlbum->folder");
+        Storage::deleteDirectory("$category->slug/$oldAlbum->slug/$oldAlbum->folder");
 
         return $this->imageRepository->regenerate($data);
     }

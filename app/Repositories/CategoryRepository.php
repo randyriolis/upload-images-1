@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -13,6 +14,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function store($data)
     {
+        $data['slug'] = Str::slug($data['name'], '-');
         return Category::create($data);
     }
 

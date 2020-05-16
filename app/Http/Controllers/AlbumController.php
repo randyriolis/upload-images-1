@@ -81,7 +81,7 @@ class AlbumController extends Controller
         $isDeleted = $this->albumRepository->destroy($id);
 
         if ($isDeleted) {
-            return Storage::deleteDirectory("$album->name/$album->title");
+            return Storage::deleteDirectory("$album->category_slug/$album->album_slug");
         }
     }
 }

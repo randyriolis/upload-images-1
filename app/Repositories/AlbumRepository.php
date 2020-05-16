@@ -25,6 +25,7 @@ class AlbumRepository implements AlbumRepositoryInterface
     public function store($data)
     {
         $data['folder'] = Str::uuid();
+        $data['slug'] = Str::slug($data['title'], '-');
 
         return Album::create($data);
     }
@@ -59,7 +60,7 @@ class AlbumRepository implements AlbumRepositoryInterface
      */
     public function getPathAlbum($id)
     {
-        return Album::select('name', 'title')
+        return Album::select('albums.slug as album_slug', 'categories.slug as category_slug')
             ->where('albums.id', $id)
             ->join('categories', 'category_id', 'categories.id')
             ->firstOrFail();

@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $isDeleted = $this->categoryRepository->destroy($id);
 
         if ($isDeleted) {
-            return Storage::deleteDirectory($category->name);
+            return Storage::deleteDirectory($category->slug);
         }
     }
 }
