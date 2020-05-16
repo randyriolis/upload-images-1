@@ -3,18 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Image;
-use Auth;
 
 class ImageRepository implements ImageRepositoryInterface
 {
     public function index($albumId)
     {
-        return Image::select('images.id', 'path')
-            ->where([
-                'album_id' => $albumId,
-                'user_id' => Auth::id()
-            ])
-            ->join('albums', 'album_id', 'albums.id')
+        return Image::select('id', 'path')
+            ->whereAlbumId($albumId)
             ->get();
     }
 
@@ -54,12 +49,8 @@ class ImageRepository implements ImageRepositoryInterface
      */
     public function firstOrFail($id)
     {
-        return Image::select('images.id', 'path')
-            ->where([
-                'images.id' => $id,
-                'user_id' => Auth::id()
-            ])
-            ->join('albums', 'album_id', 'albums.id')
+        return Image::select('id', 'path')
+            ->whereId($id)
             ->firstOrFail();
     }
 }

@@ -9,4 +9,8 @@ interface ImageRepositoryInterface
     public function store($data);
 
     public function destroy($id);
+
+    public function regenerate($data);
+
+    public function firstOrFail($id);
 }

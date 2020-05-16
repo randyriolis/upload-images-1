@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\AlbumRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
@@ -13,11 +14,13 @@ class ImageController extends Controller
 {
     private $imageRepository;
     private $albumRepository;
+    private $categoryRepository;
 
-    public function __construct(ImageRepositoryInterface $imageRepository, AlbumRepositoryInterface $albumRepository)
+    public function __construct(ImageRepositoryInterface $imageRepository, AlbumRepositoryInterface $albumRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->imageRepository = $imageRepository;
         $this->albumRepository = $albumRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -48,43 +51,22 @@ class ImageController extends Controller
         ]);
 
         $album = $this->albumRepository->firstOrFail($request->album_id);
+        $category = $this->categoryRepository->firstOrFail($album->category_id);
         $data = [];
         
         foreach ($request->file('image') as $key => $value) {
             $imageName = Str::uuid() . '.' . $value->getClientOriginalExtension();
+            $path = "$category->name/$album->title/$album->folder";
 
             $data[$key] = [
                 'album_id' => $album->id,
-                'path' => $value->storeAs($album->folder, $imageName),
+                'path' => $value->storeAs($path, $imageName),
                 'created_at' => now()->toDateTimeString(),
                 'updated_at' => now()->toDateTimeString()
             ];
         }
 
         return $this->imageRepository->store($data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -109,36 +91,30 @@ class ImageController extends Controller
      */
     public function regenerate($albumId)
     {
-        $newFolder = Str::uuid();
-
-        $data = [
-            'folder' => $newFolder
-        ];
-
-        $success = $this->albumRepository->update($data, $albumId);
+        $oldAlbum = $this->albumRepository->firstOrFail($albumId);
+        $success = $this->albumRepository->update(Str::uuid(), $albumId);
 
         if (! $success) {
             return abort(500);
         }
 
         $images = $this->imageRepository->index($albumId);
-        $oldFolder = null;
+        $album = $this->albumRepository->firstOrFail($albumId);
+        $category = $this->categoryRepository->firstOrFail($album->category_id);
         $data = [];
+        $newAlbumPath = "$category->name/$album->title/$album->folder";
 
         foreach ($images as $key => $value) {
-            $newImageName = $newFolder . '/' . Str::uuid() . '.' . pathinfo($value->path, PATHINFO_EXTENSION);
-            
+            $newImagePath = "$newAlbumPath/" . Str::uuid() . '.' . pathinfo($value->path, PATHINFO_EXTENSION);
+
             try {
-                Storage::move($value->path, $newImageName);
-                $oldFolder = pathinfo($value->path, PATHINFO_DIRNAME);
+                Storage::move($value->path, $newImagePath);
             } catch (\Throwable $th) {}
 
-            $data[$value->id] = $newImageName;
+            $data[$value->id] = $newImagePath;
         }
 
-        if ($oldFolder) {
-            Storage::deleteDirectory($oldFolder);
-        }
+        Storage::deleteDirectory("$category->name/$oldAlbum->title/$oldAlbum->folder");
 
         return $this->imageRepository->regenerate($data);
     }

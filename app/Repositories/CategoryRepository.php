@@ -25,4 +25,15 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::select('id', 'name')->get();
     }
+
+    /**
+     * Get category berdasarkan id
+     * 
+     * @param   int id
+     * @return  App\Models\Category
+     */
+    public function firstOrFail($id)
+    {
+        return Category::whereId($id)->firstOrFail();
+    }
 }

@@ -11,4 +11,6 @@ interface CategoryRepositoryInterface
     public function destroy($id);
 
     public function getIdName();
+
+    public function firstOrFail($id);
 }

@@ -29,6 +29,13 @@ class AlbumRepository implements AlbumRepositoryInterface
         return Album::create($data);
     }
 
+    public function update($folder, $id)
+    {
+        return Album::whereId($id)->update([
+            'folder' => $folder
+        ]);
+    }
+
     public function destroy($id)
     {
         $album = $this->firstOrFail($id);
