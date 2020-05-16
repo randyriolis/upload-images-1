@@ -26,6 +26,7 @@ mix.js('resources/js/sb-admin-2.js', js)
 
 // category
 mix.js('resources/js/dashboard/category/index.js', js + 'dashboard/category/');
+mix.js('resources/js/dashboard/category/show.js', js + 'dashboard/category/');
 
 // album
 mix.js('resources/js/dashboard/album/index.js', js + 'dashboard/album/');

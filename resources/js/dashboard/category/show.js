@@ -1,26 +1,33 @@
 'use strict'
 
+const categoryId = $('meta[name="category-id"]').attr('content');
+
 const dataTable = $('#dataTable').DataTable({
     processing: true,
     serverSide: true,
-    ajax: '',
+    ajax: {
+        url: '/dashboard/albums/categories',
+        data: {
+            category_id: categoryId
+        }
+    },
     columns: [
         {
-            data: 'name',
-            name: 'name'
+            data: 'title',
+            name: 'title'
         },
         {
-            data: 'albums_count',
-            name: 'albums_count'
+            data: 'images_count',
+            name: 'images_count'
         },
         {
             data: 'id',
             orderable: false,
             searchable: false,
             render: (id) => {
-                return /*html*/`
+                return /*html*/ `
                     <button class="btn btn-sm btn-danger delete">Hapus</button>
-                    <a href="${window.location.href + '/' + id}" class="btn btn-sm btn-primary detail">Detail</a>
+                    <a href="/dashboard/albums/${id}" class="btn btn-sm btn-primary detail">Detail</a>
                 `
             }
         }
@@ -34,7 +41,7 @@ const dataTable = $('#dataTable').DataTable({
     }
 })
 
-$('#kategori-tambah-modal form').submit(function (e) {
+$('#album-tambah-modal form').submit(function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -47,7 +54,7 @@ $('#kategori-tambah-modal form').submit(function (e) {
 
     form.loading();
 
-    axios.post('', form.serialize())
+    axios.post('/dashboard/albums', form.serialize())
         .then(() => {
             modal.modal('hide');
             form.removeClass('was-validated')[0].reset();
@@ -58,13 +65,14 @@ $('#kategori-tambah-modal form').submit(function (e) {
         .then(() => form.loading(false));
 })
 
+
 function showDeleteModal(data) {
-    $('#kategori-hapus-id').val(data.id);
-    $('#kategori-hapus-modal .modal-body strong').text(data.name);
-    $('#kategori-hapus-modal').modal('show');
+    $('#album-hapus-id').val(data.id);
+    $('#album-hapus-modal .modal-body strong').text(data.title);
+    $('#album-hapus-modal').modal('show');
 }
 
-$('#kategori-hapus-modal form').submit(function (e) {
+$('#album-hapus-modal form').submit(function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -77,7 +85,7 @@ $('#kategori-hapus-modal form').submit(function (e) {
 
     form.loading();
 
-    const url = 'categories/' + $('#kategori-hapus-id').val();
+    const url = '/dashboard/albums/' + $('#album-hapus-id').val();
 
     axios.delete(url, form.serialize())
         .then(() => {

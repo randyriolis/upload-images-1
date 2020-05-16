@@ -84,4 +84,11 @@ class AlbumController extends Controller
             return Storage::deleteDirectory("$album->category_slug/$album->album_slug");
         }
     }
+
+    public function getByCategoryId()
+    {
+        $albums = $this->albumRepository->getByCategoryId(request()->category_id);
+
+        return DataTables::of($albums)->make(true);
+    }
 }

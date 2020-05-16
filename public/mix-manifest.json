@@ -5,5 +5,6 @@
     "/js/dashboard/album/index.js": "/js/dashboard/album/index.js",
     "/js/dashboard/album/show.js": "/js/dashboard/album/show.js",
     "/js/dashboard/category/index.js": "/js/dashboard/category/index.js",
+    "/js/dashboard/category/show.js": "/js/dashboard/category/show.js",
     "/js/sb-admin-2.js": "/js/sb-admin-2.js"
 }

@@ -19,7 +19,8 @@ Auth::routes();
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
     Route::redirect('/', '/dashboard/categories');
-    Route::apiResource('categories', 'CategoryController')->except(['update', 'show']);
+    Route::apiResource('categories', 'CategoryController')->except(['update']);
+    Route::get('albums/categories', 'AlbumController@getByCategoryId')->name('albums.category');
     Route::apiResource('albums', 'AlbumController')->except(['update']);
     Route::post('images/regenerate/{albumId}', 'ImageController@regenerate')->name('images.regenerate');
     Route::apiResource('images', 'ImageController')->except(['update', 'show']);

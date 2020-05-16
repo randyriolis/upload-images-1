@@ -13,4 +13,8 @@ interface AlbumRepositoryInterface
     public function destroy($id);
 
     public function firstOrFail($id);
+
+    public function getPathAlbum($id);
+
+    public function getByCategoryId($id);
 }

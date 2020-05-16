@@ -65,4 +65,13 @@ class AlbumRepository implements AlbumRepositoryInterface
             ->join('categories', 'category_id', 'categories.id')
             ->firstOrFail();
     }
+
+    public function getByCategoryId($id)
+    {
+        return Album::select('albums.id', 'title')
+            ->withcount('images')
+            ->where('categories.id', $id)
+            ->join('categories', 'category_id', 'categories.id')
+            ->get();
+    }
 }

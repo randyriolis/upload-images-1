@@ -51,6 +51,19 @@ class CategoryController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $category = $this->categoryRepository->firstOrFail($id);
+
+        return view('dashboard.category.show', compact('category'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
