@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
     Route::redirect('/', '/dashboard/categories');
