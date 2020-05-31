@@ -13,4 +13,6 @@ interface ImageRepositoryInterface
     public function regenerate($data);
 
     public function firstOrFail($id);
+
+    public function getMaxNoUrut($albumId);
 }

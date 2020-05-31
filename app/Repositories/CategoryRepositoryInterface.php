@@ -13,4 +13,6 @@ interface CategoryRepositoryInterface
     public function getIdName();
 
     public function firstOrFail($id);
+    
+    public function getWithFolder($id);
 }

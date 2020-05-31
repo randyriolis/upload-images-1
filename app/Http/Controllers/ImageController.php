@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use App\Repositories\AlbumRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
@@ -41,24 +42,25 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
-        $data = $request->validate([
-            'album_id' => 'required|integer',
-            'image.*' => 'image'
-        ], [
-            'image' => 'Format file tidak didukung.'
-        ]);
+        $data = $request->validated();
 
         $album = $this->albumRepository->firstOrFail($request->album_id);
-        $category = $this->categoryRepository->firstOrFail($album->category_id);
+        $category = $this->categoryRepository->getWithFolder($album->category_id);
+        $maxNoUrut = $this->imageRepository->getMaxNoUrut($album->id);
         $data = [];
         
         foreach ($request->file('image') as $key => $value) {
             $imageName = Str::uuid() . '.' . $value->getClientOriginalExtension();
-            $path = "$category->slug/$album->slug/$album->folder";
+            $path = "$category->category_slug/$album->slug/$album->folder";
+
+            if ($category->folder_slug) {
+                $path = "$category->folder_slug/$path";
+            }
 
             $data[$key] = [
+                'no_urut' => $maxNoUrut + $key + 1,
                 'album_id' => $album->id,
                 'path' => $value->storeAs($path, $imageName),
                 'created_at' => now()->toDateTimeString(),
@@ -100,9 +102,13 @@ class ImageController extends Controller
 
         $images = $this->imageRepository->index($albumId);
         $album = $this->albumRepository->firstOrFail($albumId);
-        $category = $this->categoryRepository->firstOrFail($album->category_id);
+        $category = $this->categoryRepository->getWithFolder($album->category_id);
         $data = [];
-        $newAlbumPath = "$category->slug/$album->slug/$album->folder";
+        $newAlbumPath = "$category->category_slug/$album->slug/$album->folder";
+
+        if ($category->folder_slug) {
+            $newAlbumPath = "$category->folder_slug/$newAlbumPath";
+        }
 
         foreach ($images as $key => $value) {
             $newImagePath = "$newAlbumPath/" . Str::uuid() . '.' . pathinfo($value->path, PATHINFO_EXTENSION);

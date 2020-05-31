@@ -13,6 +13,10 @@ const dataTable = $('#dataTable').DataTable({
     },
     columns: [
         {
+            data: 'no_urut',
+            name: 'no_urut'
+        },
+        {
             data: 'path',
             name: 'path',
             orderable: false,

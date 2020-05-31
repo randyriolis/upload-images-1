@@ -36,4 +36,9 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::whereId($id)->firstOrFail();
     }
+
+    public function getWithFolder($id)
+    {
+        return Category::select('categories.slug as category_slug', 'folders.slug as folder_slug')->where('categories.id', $id)->leftJoin('folders', 'folder_id', 'folders.id')->firstOrFail();
+    }
 }

@@ -8,8 +8,9 @@ class ImageRepository implements ImageRepositoryInterface
 {
     public function index($albumId)
     {
-        return Image::select('id', 'path')
+        return Image::select('id', 'no_urut', 'path')
             ->whereAlbumId($albumId)
+            ->orderBy('no_urut')
             ->get();
     }
 
@@ -52,5 +53,10 @@ class ImageRepository implements ImageRepositoryInterface
         return Image::select('id', 'path')
             ->whereId($id)
             ->firstOrFail();
+    }
+
+    public function getMaxNoUrut($albumId)
+    {
+        return Image::whereAlbumId($albumId)->max('no_urut');
     }
 }

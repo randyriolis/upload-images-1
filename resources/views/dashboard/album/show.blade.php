@@ -32,6 +32,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>No Urut</th>
                                 <th>Image</th>
                                 <th>Path</th>
                                 <th>Action</th>
