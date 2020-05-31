@@ -6,8 +6,12 @@ const dataTable = $('#dataTable').DataTable({
     ajax: '',
     columns: [
         {
-            data: 'name',
-            name: 'name'
+            data: 'category_name',
+            name: 'category_name'
+        },
+        {
+            data: 'folder_name',
+            name: 'folder_name'
         },
         {
             data: 'albums_count',
