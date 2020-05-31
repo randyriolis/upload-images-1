@@ -8,7 +8,7 @@ class FolderRepository implements FolderRepositoryInterface
 {
     public function index()
     {
-        return Folder::select('id', 'name')->get();
+        return Folder::select('id', 'name', 'slug')->get();
     }
 
     public function store($data)

@@ -10,6 +10,10 @@ const dataTable = $('#dataTable').DataTable({
             name: 'name'
         },
         {
+            data: 'slug',
+            name: 'slug'
+        },
+        {
             data: 'id',
             orderable: false,
             searchable: false,
