@@ -70,4 +70,29 @@
         </form>
     </div>
 </div>
+
+<div class="modal fade" id="folder-hapus-modal" tabindex="-1" role="dialog" aria-labelledby="folder-hapus-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="needs-validation" novalidate>
+            <input type="hidden" name="id" id="folder-hapus-id">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hapus Folder</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Apakah Anda yakin akan menghapus folder <strong></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

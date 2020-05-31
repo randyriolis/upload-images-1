@@ -15,4 +15,9 @@ class FolderRepository implements FolderRepositoryInterface
     {
         return Folder::create($data);
     }
+
+    public function destroy($folder)
+    {
+        return $folder->delete();
+    }
 }

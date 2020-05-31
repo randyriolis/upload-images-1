@@ -52,6 +52,6 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder)
     {
-        //
+        return $this->folderRepository->destroy($folder);
     }
 }
