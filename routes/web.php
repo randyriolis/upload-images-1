@@ -23,6 +23,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('albums/categories', 'AlbumController@getByCategoryId')->name('albums.category');
     Route::apiResource('albums', 'AlbumController')->except(['update']);
     Route::post('images/regenerate/{albumId}', 'ImageController@regenerate')->name('images.regenerate');
+    Route::post('images/path', 'ImageController@storeByPath');
     Route::apiResource('images', 'ImageController')->except(['update', 'show']);
     Route::apiResource('folders', 'FolderController')->except(['update', 'show']);
 });

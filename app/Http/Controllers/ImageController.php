@@ -124,4 +124,27 @@ class ImageController extends Controller
 
         return $this->imageRepository->regenerate($data);
     }
+
+    public function storeByPath(ImageRequest $request)
+    {
+        $data = $request->validated();
+
+        $path = preg_replace('/\n$/', '', preg_replace('/^\n/', '', preg_replace('/[\r\n]+/', "\n", $data['path'])));
+        $path = explode("\n", $path);
+
+        $maxNoUrut = $this->imageRepository->getMaxNoUrut($data['album_id']);
+        $data = [];
+
+        foreach ($path as $key => $value) {
+            $data[$key] = [
+                'no_urut' => $maxNoUrut + $key + 1,
+                'album_id' => $request->album_id,
+                'path' => $value,
+                'created_at' => now()->toDateTimeString(),
+                'updated_at' => now()->toDateTimeString()
+            ];
+        }
+
+        return $this->imageRepository->store($data);
+    }
 }

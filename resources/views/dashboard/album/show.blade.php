@@ -21,6 +21,7 @@
     </div>
     <div class="col text-right">
         <button class="btn btn-primary" data-toggle="modal" data-target="#image-tambah-modal">Add Image</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#image-path-modal">Add Image by Path</button>
         <button class="btn btn-warning" data-toggle="modal" data-target="#image-regenerate-modal">Regenerate URL</button>
     </div>
 </div>
@@ -124,6 +125,34 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Yakin</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="image-path-modal" tabindex="-1" role="dialog" aria-labelledby="image-path-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form class="needs-validation" novalidate method="POST" action="/dashboard/images/path">
+            <input type="hidden" name="album_id" value="{{ $album->id }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Gambar Berdasarkan Path</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="image-path">Path Gambar</label>
+                        <textarea class="form-control" id="image-path" name="path" rows="5" aria-describedby="image-path-desc" required></textarea>
+                        <small id="image-path-desc" class="form-text text-muted">Pisahkan tiap path dengan enter</small>
+                        <div class="invalid-feedback">Data tidak boleh kosong</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </div>
         </form>

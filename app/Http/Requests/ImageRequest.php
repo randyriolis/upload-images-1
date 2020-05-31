@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Route;
 
 class ImageRequest extends FormRequest
 {
@@ -23,21 +24,16 @@ class ImageRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'album_id' => 'required|integer',
-            'image.*' => 'image'
         ];
-    }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'image' => 'Format file tidak didukung.'
-        ];
+        if (Route::is('dashboard.images.store')) {
+            $rules['image.*'] = 'required|image';
+        } else {
+            $rules['path'] = 'required';
+        }
+
+        return $rules;
     }
 }
