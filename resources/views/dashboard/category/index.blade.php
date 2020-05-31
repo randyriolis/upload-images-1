@@ -47,6 +47,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="kategori-tambah-folder">Folder</label>
+                        <select class="custom-select" id="kategori-tambah-folder" name="folder_id">
+                            <option value="">Pilih folder</option>
+                            @foreach ($folders as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="kategori-tambah-nama">Nama</label>
                         <input type="text" class="form-control" id="kategori-tambah-nama" name="name" pattern="[A-Za-z0-9-_. ]+" required>
                         <small class="form-text text-muted">Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, titik (.), underscore (_), tanda pisah (-), dan spasi</small>

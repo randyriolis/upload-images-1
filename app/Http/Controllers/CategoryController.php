@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\FolderRepositoryInterface;
 use DataTables;
 use Illuminate\Http\Request;
 use Storage;
@@ -10,10 +12,12 @@ use Storage;
 class CategoryController extends Controller
 {
     private $categoryRepository;
+    private $folderRepository;
 
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    public function __construct(CategoryRepositoryInterface $categoryRepository, FolderRepositoryInterface $folderRepository)
     {
         $this->categoryRepository = $categoryRepository;
+        $this->folderRepository = $folderRepository;
     }
 
     /**
@@ -24,7 +28,9 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if (! $request->ajax()) {
-            return view('dashboard.category.index');
+            $folders = $this->folderRepository->index();
+
+            return view('dashboard.category.index', compact('folders'));
         }
 
         $categories = $this->categoryRepository->index();
@@ -38,16 +44,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|unique:categories|regex:/^[A-Za-z0-9._\s-]+$/',
-            'slug' => 'required|unique:categories|regex:/^[A-Za-z0-9-]+$/',
-        ], [
-            'regex' => 'Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, titik (.), underscore (_), tanda pisah (-), dan spasi',
-            'slug' => 'Karakter yang diperbolehkan adalah a-z, A-Z, 0-9, dan tanda pisah (-)',
-            'unique' => 'Nama sudah ada'
-        ]);
+        $data = $request->validated();
 
         return $this->categoryRepository->store($data);
     }
