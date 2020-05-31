@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FolderRequest;
 use App\Models\Folder;
 use App\Repositories\FolderRepositoryInterface;
 use DataTables;
-use Illuminate\Http\Request;
 
 class FolderController extends Controller
 {
@@ -37,9 +37,11 @@ class FolderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FolderRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        return $this->folderRepository->store($data);
     }
 
     /**

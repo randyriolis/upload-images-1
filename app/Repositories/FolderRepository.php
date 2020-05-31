@@ -10,4 +10,9 @@ class FolderRepository implements FolderRepositoryInterface
     {
         return Folder::select('id', 'name')->get();
     }
+
+    public function store($data)
+    {
+        return Folder::create($data);
+    }
 }
