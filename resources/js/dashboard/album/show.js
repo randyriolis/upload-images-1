@@ -91,7 +91,7 @@ $('#image-tambah-modal form').submit(function (e) {
         .then(() => {
             modal.modal('hide');
             form.removeClass('was-validated')[0].reset();
-            form.next('.custom-file-label').html('Choose images...');
+            $('.custom-file-label', form).html('Choose images...');
             dataTable.ajax.reload();
             iziToast('Berhasil menambah data')
         })
