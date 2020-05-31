@@ -25,12 +25,12 @@ mix.js('resources/js/sb-admin-2.js', js)
     .sass('resources/sass/sb-admin-2/sb-admin-2.scss', css);
 
 // category
-mix.js('resources/js/dashboard/category/index.js', js + 'dashboard/category/');
-mix.js('resources/js/dashboard/category/show.js', js + 'dashboard/category/');
+mix.js('resources/js/dashboard/category/index.js', js + 'dashboard/category/')
+    .js('resources/js/dashboard/category/show.js', js + 'dashboard/category/');
 
 // album
-mix.js('resources/js/dashboard/album/index.js', js + 'dashboard/album/');
-mix.js('resources/js/dashboard/album/show.js', js + 'dashboard/album/');
+mix.js('resources/js/dashboard/album/index.js', js + 'dashboard/album/')
+    .js('resources/js/dashboard/album/show.js', js + 'dashboard/album/');
 
 // folder
 mix.js('resources/js/dashboard/folder/index.js', js + 'dashboard/folder/');
