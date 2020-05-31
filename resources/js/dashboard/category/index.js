@@ -20,7 +20,7 @@ const dataTable = $('#dataTable').DataTable({
             render: (id) => {
                 return /*html*/`
                     <button class="btn btn-sm btn-danger delete">Hapus</button>
-                    <a href="${window.location.href + '/' + id}" class="btn btn-sm btn-primary detail">Detail</a>
+                    <a href="${'/dashboard/categories/' + id}" class="btn btn-sm btn-primary detail">Detail</a>
                 `
             }
         }
