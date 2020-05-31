@@ -78,14 +78,21 @@ $('#image-tambah-modal form').submit(function (e) {
 
     const form = $(this);
     const modal = $(this).parents('.modal');
+    const progressBar = $('.progress .progress-bar', form);
 
     form.loading();
+    $(progressBar).parent().removeClass('d-none');
 
     const formData = new FormData(form[0]);
 
     axios.post('/dashboard/images', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
+            },
+            onUploadProgress: (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                
+                $(progressBar).attr('aria-valuenow', percentCompleted).css('width', `${percentCompleted}%`).html(`${percentCompleted}%`);
             }
         })
         .then(() => {
@@ -96,7 +103,10 @@ $('#image-tambah-modal form').submit(function (e) {
             iziToast('Berhasil menambah data')
         })
         .catch(() => iziToast('Gagal menambah data', false))
-        .then(() => form.loading(false));
+        .then(() => {
+            form.loading(false);
+            $(progressBar).attr('aria-valuenow', 0).css('width', '0%').html('0%').parent().addClass('d-none');
+        });
 })
 
 function showDeleteModal(data) {
