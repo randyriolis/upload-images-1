@@ -13,4 +13,9 @@ class Category extends Model
     {
         return $this->hasMany(Album::class);
     }
+
+    public function folder()
+    {
+        $this->belongsTo(Folder::class);
+    }
 }

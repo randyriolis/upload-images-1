@@ -31,3 +31,6 @@ mix.js('resources/js/dashboard/category/show.js', js + 'dashboard/category/');
 // album
 mix.js('resources/js/dashboard/album/index.js', js + 'dashboard/album/');
 mix.js('resources/js/dashboard/album/show.js', js + 'dashboard/album/');
+
+// folder
+mix.js('resources/js/dashboard/folder/index.js', js + 'dashboard/folder/');

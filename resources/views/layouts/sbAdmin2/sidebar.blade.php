@@ -12,6 +12,12 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
+    <li class="nav-item {{ ! Route::is('dashboard.folders.index') ?: 'active' }}">
+        <a class="nav-link" href="{{ route('dashboard.folders.index') }}">
+            <i class="far fa-folder-open"></i>
+            <span>Folders</span>
+        </a>
+    </li>
     <li class="nav-item {{ ! Route::is('dashboard.categories.index') ?: 'active' }}">
         <a class="nav-link" href="{{ route('dashboard.categories.index') }}">
             <i class="fas fa-list-ul"></i>

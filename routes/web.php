@@ -24,4 +24,5 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::apiResource('albums', 'AlbumController')->except(['update']);
     Route::post('images/regenerate/{albumId}', 'ImageController@regenerate')->name('images.regenerate');
     Route::apiResource('images', 'ImageController')->except(['update', 'show']);
+    Route::apiResource('folders', 'FolderController')->except(['update', 'show']);
 });
