@@ -65,7 +65,9 @@ $('.custom-file input').change(function (e) {
         files.push($(this)[0].files[i].name);
     }
 
-    $(this).next('.custom-file-label').html(files.join(', '));
+    const labelText = files.join(', ').length > 50 ? files.join(', ').slice(0, 50) + '...' : files.join(', ');
+
+    $(this).next('.custom-file-label').html(labelText);
 });
 
 $('#image-tambah-modal form').submit(function (e) {
