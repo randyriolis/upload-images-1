@@ -50,7 +50,7 @@ class ImageController extends Controller
         $category = $this->categoryRepository->getWithFolder($album->category_id);
         $maxNoUrut = $this->imageRepository->getMaxNoUrut($album->id);
         $data = [];
-        $path = "$category->category_slug/$album->slug/$album->folder";
+        $path = "$category->category_slug/$album->slug";
 
         if ($category->folder_slug) {
             $path = "$category->folder_slug/$path";
@@ -94,17 +94,12 @@ class ImageController extends Controller
     public function regenerate($albumId)
     {
         $oldAlbum = $this->albumRepository->firstOrFail($albumId);
-        $success = $this->albumRepository->update(Str::uuid(), $albumId);
-
-        if (! $success) {
-            return abort(500);
-        }
 
         $images = $this->imageRepository->index($albumId);
         $album = $this->albumRepository->firstOrFail($albumId);
         $category = $this->categoryRepository->getWithFolder($album->category_id);
         $data = [];
-        $newAlbumPath = "$category->category_slug/$album->slug/$album->folder";
+        $newAlbumPath = "$category->category_slug/$album->slug";
 
         if ($category->folder_slug) {
             $newAlbumPath = "$category->folder_slug/$newAlbumPath";
@@ -120,7 +115,7 @@ class ImageController extends Controller
             $data[$value->id] = $newImagePath;
         }
 
-        Storage::deleteDirectory("$category->slug/$oldAlbum->slug/$oldAlbum->folder");
+        Storage::deleteDirectory("$category->slug/$oldAlbum->slug");
 
         return $this->imageRepository->regenerate($data);
     }
@@ -134,7 +129,7 @@ class ImageController extends Controller
 
         $album = $this->albumRepository->firstOrFail($data['album_id']);
         $category = $this->categoryRepository->getWithFolder($album->category_id);
-        $fullPath = "$category->category_slug/$album->slug/$album->folder";
+        $fullPath = "$category->category_slug/$album->slug";
         $maxNoUrut = $this->imageRepository->getMaxNoUrut($data['album_id']);
         $data = [];
 

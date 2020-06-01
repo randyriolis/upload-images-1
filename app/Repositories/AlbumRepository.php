@@ -24,17 +24,9 @@ class AlbumRepository implements AlbumRepositoryInterface
 
     public function store($data)
     {
-        $data['folder'] = Str::uuid();
         $data['slug'] = Str::slug($data['title'], '-');
 
         return Album::create($data);
-    }
-
-    public function update($folder, $id)
-    {
-        return Album::whereId($id)->update([
-            'folder' => $folder
-        ]);
     }
 
     public function destroy($id)
