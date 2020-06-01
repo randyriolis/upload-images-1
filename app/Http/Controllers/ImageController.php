@@ -129,17 +129,24 @@ class ImageController extends Controller
     {
         $data = $request->validated();
 
-        $path = preg_replace('/\n$/', '', preg_replace('/^\n/', '', preg_replace('/[\r\n]+/', "\n", $data['path'])));
-        $path = explode("\n", $path);
+        $paths = preg_replace('/\n$/', '', preg_replace('/^\n/', '', preg_replace('/[\r\n]+/', "\n", $data['path'])));
+        $paths = explode("\n", $paths);
 
+        $album = $this->albumRepository->firstOrFail($data['album_id']);
+        $category = $this->categoryRepository->getWithFolder($album->category_id);
+        $fullPath = "$category->category_slug/$album->slug/$album->folder";
         $maxNoUrut = $this->imageRepository->getMaxNoUrut($data['album_id']);
         $data = [];
 
-        foreach ($path as $key => $value) {
+        if ($category->folder_slug) {
+            $fullPath = "$category->folder_slug/$fullPath";
+        }
+
+        foreach ($paths as $key => $value) {
             $data[$key] = [
                 'no_urut' => $maxNoUrut + $key + 1,
                 'album_id' => $request->album_id,
-                'path' => $value,
+                'path' => "$fullPath/$value",
                 'created_at' => now()->toDateTimeString(),
                 'updated_at' => now()->toDateTimeString()
             ];
