@@ -52,9 +52,10 @@ class AlbumRepository implements AlbumRepositoryInterface
      */
     public function getPathAlbum($id)
     {
-        return Album::select('albums.slug as album_slug', 'categories.slug as category_slug')
+        return Album::select('albums.slug as album_slug', 'categories.slug as category_slug', 'folders.slug as folder_slug')
             ->where('albums.id', $id)
             ->join('categories', 'category_id', 'categories.id')
+            ->leftJoin('folders', 'folder_id', 'folders.id')
             ->firstOrFail();
     }
 
