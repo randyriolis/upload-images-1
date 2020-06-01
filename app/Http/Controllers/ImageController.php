@@ -50,14 +50,14 @@ class ImageController extends Controller
         $category = $this->categoryRepository->getWithFolder($album->category_id);
         $maxNoUrut = $this->imageRepository->getMaxNoUrut($album->id);
         $data = [];
+        $path = "$category->category_slug/$album->slug/$album->folder";
+
+        if ($category->folder_slug) {
+            $path = "$category->folder_slug/$path";
+        }
         
         foreach ($request->file('image') as $key => $value) {
             $imageName = Str::uuid() . '.' . $value->getClientOriginalExtension();
-            $path = "$category->category_slug/$album->slug/$album->folder";
-
-            if ($category->folder_slug) {
-                $path = "$category->folder_slug/$path";
-            }
 
             $data[$key] = [
                 'no_urut' => $maxNoUrut + $key + 1,
