@@ -22,7 +22,7 @@ const dataTable = $('#dataTable').DataTable({
             orderable: false,
             searchable: false,
             render: (data) => {
-                return `<img src="/storage/${data}" alt="thumbnail" class="img-thumbnail" height="125" width="200">`;
+                return `<img src="/image/${data}" alt="thumbnail" class="img-thumbnail" height="125" width="200">`;
             }
         },
         {
@@ -166,7 +166,7 @@ $('#image-regenerate-modal form').submit(function (e) {
 })
 
 function copyToClipboard(data) {
-    const url = window.location.protocol + '//' + window.location.hostname + '/storage/' + data.path;
+    const url = window.location.protocol + '//' + window.location.hostname + '/image/' + data.path;
     let aux = document.createElement("input");
 
     aux.setAttribute("value", url);
