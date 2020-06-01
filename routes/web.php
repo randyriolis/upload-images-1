@@ -18,7 +18,7 @@ Route::view('/', 'welcome');
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
-    Route::redirect('/', '/dashboard/categories');
+    Route::redirect('/', '/dashboard/folders');
     Route::apiResource('categories', 'CategoryController')->except(['update']);
     Route::get('albums/categories', 'AlbumController@getByCategoryId')->name('albums.category');
     Route::apiResource('albums', 'AlbumController')->except(['update']);
