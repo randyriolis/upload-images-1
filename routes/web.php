@@ -26,4 +26,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::post('images/path', 'ImageController@storeByPath');
     Route::apiResource('images', 'ImageController')->except(['update', 'show']);
     Route::apiResource('folders', 'FolderController')->except(['update', 'show']);
+
+    Route::group(['prefix' => 'regenerate', 'as' => 'regenerate.'], function () {
+        Route::get('category', 'RegenerateController@category')->name('category');
+        Route::post('category', 'RegenerateController@categoryPost')->name('categoryPost');
+    });
 });

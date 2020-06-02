@@ -30,6 +30,19 @@
             <span>Albums</span>
         </a>
     </li>
+    <li class="nav-item {{ ! Route::is('dashboard.regenerate.*') ?: 'active' }}">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-sync"></i>
+            <span>Regenerate</span>
+        </a>
+        <div id="collapseTwo" class="collapse {{ ! Route::is('dashboard.regenerate.*') ?: 'show' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="#">All</a>
+                <a class="collapse-item {{ ! Route::is('dashboard.regenerate.category') ?: 'active' }}" href="{{ route('dashboard.regenerate.category') }}">By Category</a>
+                <a class="collapse-item" href="#">By Album</a>
+            </div>
+        </div>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

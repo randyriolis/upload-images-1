@@ -61,7 +61,7 @@ class AlbumRepository implements AlbumRepositoryInterface
 
     public function getByCategoryId($id)
     {
-        return Album::select('albums.id', 'title')
+        return Album::select('albums.id', 'title', 'albums.slug')
             ->withcount('images')
             ->where('categories.id', $id)
             ->join('categories', 'category_id', 'categories.id')
