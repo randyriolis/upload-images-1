@@ -93,29 +93,24 @@ class ImageController extends Controller
      */
     public function regenerate($albumId)
     {
-        $oldAlbum = $this->albumRepository->firstOrFail($albumId);
-
-        $images = $this->imageRepository->index($albumId);
         $album = $this->albumRepository->firstOrFail($albumId);
         $category = $this->categoryRepository->getWithFolder($album->category_id);
         $data = [];
-        $newAlbumPath = "$category->category_slug/$album->slug";
+        $path = "$category->category_slug";
 
         if ($category->folder_slug) {
-            $newAlbumPath = "$category->folder_slug/$newAlbumPath";
+            $path = "$category->folder_slug/$path";
         }
 
-        foreach ($images as $key => $value) {
-            $newImagePath = "$newAlbumPath/" . Str::uuid() . '.' . pathinfo($value->path, PATHINFO_EXTENSION);
+        foreach ($album->images as $image) {
+            $newImagePath = "$path/$album->slug/" . Str::uuid() . '.' . pathinfo($image->path, PATHINFO_EXTENSION);
 
             try {
-                Storage::move($value->path, $newImagePath);
+                Storage::move($image->path, $newImagePath);
             } catch (\Throwable $th) {}
 
-            $data[$value->id] = $newImagePath;
+            $data[$image->id] = $newImagePath;
         }
-
-        Storage::deleteDirectory("$category->slug/$oldAlbum->slug");
 
         return $this->imageRepository->regenerate($data);
     }
