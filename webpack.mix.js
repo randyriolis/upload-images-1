@@ -36,4 +36,5 @@ mix.js('resources/js/dashboard/album/index.js', js + 'dashboard/album/')
 mix.js('resources/js/dashboard/folder/index.js', js + 'dashboard/folder/');
 
 // regenerate
-mix.js('resources/js/dashboard/regenerate/category.js', js + 'dashboard/regenerate/');
+mix.js('resources/js/dashboard/regenerate/category.js', js + 'dashboard/regenerate/')
+    .js('resources/js/dashboard/regenerate/album.js', js + 'dashboard/regenerate/');

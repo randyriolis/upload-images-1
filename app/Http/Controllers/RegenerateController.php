@@ -62,4 +62,41 @@ class RegenerateController extends Controller
 
         return $this->imageRepository->regenerate($data);
     }
+
+    public function album()
+    {
+        if (! request()->ajax()) {
+            return view('dashboard.regenerate.album');
+        }
+
+        $albums = $this->albumRepository->index();
+
+        return DataTables::of($albums)->make(true);
+    }
+
+    public function albumPost(RegenerateRequest $request)
+    {
+        $data = $request->validated();
+
+        $album = $this->albumRepository->firstOrFail($data['album_id']);
+        $category = $this->categoryRepository->getWithFolder($album->category_id);
+        $data = [];
+        $path = "$category->category_slug";
+
+        if ($category->folder_slug) {
+            $path = "$category->folder_slug/$path";
+        }
+
+        foreach ($album->images as $image) {
+            $newImagePath = "$path/$album->slug/" . Str::uuid() . '.' . pathinfo($image->path, PATHINFO_EXTENSION);
+
+            try {
+                Storage::move($image->path, $newImagePath);
+            } catch (\Throwable $th) {}
+
+            $data[$image->id] = $newImagePath;
+        }
+
+        return $this->imageRepository->regenerate($data);
+    }
 }

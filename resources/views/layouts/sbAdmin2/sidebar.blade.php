@@ -39,7 +39,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="#">All</a>
                 <a class="collapse-item {{ ! Route::is('dashboard.regenerate.category') ?: 'active' }}" href="{{ route('dashboard.regenerate.category') }}">By Category</a>
-                <a class="collapse-item" href="#">By Album</a>
+                <a class="collapse-item {{ ! Route::is('dashboard.regenerate.album') ?: 'active' }}" href="{{ route('dashboard.regenerate.album') }}">By Album</a>
             </div>
         </div>
     </li>

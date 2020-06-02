@@ -29,5 +29,11 @@ class RegenerateRequest extends FormRequest
                 'category_id' => 'required|integer'
             ];
         }
+
+        if (Route::is('dashboard.regenerate.albumPost')) {
+            return [
+                'album_id' => 'required|integer'
+            ];
+        }
     }
 }

@@ -30,5 +30,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::group(['prefix' => 'regenerate', 'as' => 'regenerate.'], function () {
         Route::get('category', 'RegenerateController@category')->name('category');
         Route::post('category', 'RegenerateController@categoryPost')->name('categoryPost');
+
+        Route::get('album', 'RegenerateController@album')->name('album');
+        Route::post('album', 'RegenerateController@albumPost')->name('albumPost');
     });
 });
