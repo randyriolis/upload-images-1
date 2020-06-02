@@ -24,6 +24,34 @@ class RegenerateController extends Controller
         $this->imageRepository = $imageRepository;
     }
 
+    public function all()
+    {
+        $categories = $this->categoryRepository->index();
+        $data = [];
+
+        foreach ($categories as $category) {
+            $path = "$category->category_slug";
+
+            if ($category->folder_slug) {
+                $path = "$category->folder_slug/$path";
+            }
+
+            foreach ($category->albums as $album) {
+                foreach ($album->images as $image) {
+                    $newImagePath = "$path/$album->slug/" . Str::uuid() . '.' . pathinfo($image->path, PATHINFO_EXTENSION);
+        
+                    try {
+                        Storage::move($image->path, $newImagePath);
+                    } catch (\Throwable $th) {}
+        
+                    $data[$image->id] = $newImagePath;
+                }
+            }
+        }
+        
+        return $this->imageRepository->regenerate($data);
+    }
+
     public function category()
     {
         if (! request()->ajax()) {

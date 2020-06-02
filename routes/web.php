@@ -28,6 +28,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::apiResource('folders', 'FolderController')->except(['update', 'show']);
 
     Route::group(['prefix' => 'regenerate', 'as' => 'regenerate.'], function () {
+        Route::post('all', 'RegenerateController@all')->name('all');
+        
         Route::get('category', 'RegenerateController@category')->name('category');
         Route::post('category', 'RegenerateController@categoryPost')->name('categoryPost');
 

@@ -37,7 +37,7 @@
         </a>
         <div id="collapseTwo" class="collapse {{ ! Route::is('dashboard.regenerate.*') ?: 'show' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">All</a>
+                <a class="collapse-item" href="#" data-toggle="modal" data-target="#regenerate-modal">All</a>
                 <a class="collapse-item {{ ! Route::is('dashboard.regenerate.category') ?: 'active' }}" href="{{ route('dashboard.regenerate.category') }}">By Category</a>
                 <a class="collapse-item {{ ! Route::is('dashboard.regenerate.album') ?: 'active' }}" href="{{ route('dashboard.regenerate.album') }}">By Album</a>
             </div>

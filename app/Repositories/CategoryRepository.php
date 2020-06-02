@@ -8,7 +8,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 {
     public function index()
     {
-        return Category::select('categories.id', 'categories.name as category_name', 'folders.name as folder_name')->withCount('albums')->leftJoin('folders', 'folder_id', 'folders.id')->get();
+        return Category::select('categories.id', 'categories.name as category_name', 'categories.slug as category_slug', 'folders.name as folder_name', 'folders.slug as folder_slug')->withCount('albums')->leftJoin('folders', 'folder_id', 'folders.id')->get();
     }
 
     public function store($data)

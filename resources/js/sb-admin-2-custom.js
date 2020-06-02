@@ -30,3 +30,21 @@ window.iziToast = function (msg, type = true) {
         position: 'topCenter'
     });
 }
+
+$('#regenerate-modal form').submit(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const form = $(this);
+    const modal = $(this).parents('.modal');
+
+    form.loading();
+    
+    axios.post('/dashboard/regenerate/all')
+        .then(() => {
+            modal.modal('hide');
+            iziToast('Berhasil regenerate url')
+        })
+        .catch(() => iziToast('Gagal regenerate url', false))
+        .then(() => form.loading(false));
+})
